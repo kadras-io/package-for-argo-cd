@@ -1,0 +1,10 @@
+#@data/values-schema
+---
+
+#@schema/desc "The namespace where to install Argo CD"
+namespace: argocd
+
+#@schema/desc "Service configuration for the Argo CD Server"
+service:
+  #@schema/desc "The Service type for the Argo CD Server"
+  type: ClusterIP

@@ -1,0 +1,77 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: argo-cd.packages.kadras.io.0.0.0
+spec:
+  licenses:
+  - Apache 2.0
+  refName: argo-cd.packages.kadras.io
+  releaseNotes: https://github.com/argoproj/argo-cd/releases
+  releasedAt: null
+  template:
+    spec:
+      deploy:
+      - kapp: {}
+      fetch:
+      - git: {}
+      template:
+      - ytt:
+          paths:
+          - config
+      - kbld: {}
+  valuesSchema:
+    openAPIv3:
+      additionalProperties: false
+      properties:
+        namespace:
+          default: argocd
+          description: The namespace where to install Argo CD
+          type: string
+        service:
+          additionalProperties: false
+          description: Service configuration for the Argo CD Server
+          properties:
+            type:
+              default: ClusterIP
+              description: The Service type for the Argo CD Server
+              type: string
+          type: object
+  version: 0.0.0
+
+---
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  creationTimestamp: null
+  name: argo-cd.packages.kadras.io
+spec:
+  categories:
+  - ci/cd
+  - gitops
+  displayName: argo-cd
+  longDescription: Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes.
+  maintainers:
+  - name: Thomas Vitale
+  providerName: Arktonix
+  shortDescription: Argo CD is a declarative, GitOps continuous delivery tool for
+    Kubernetes.
+
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  annotations:
+    kctrl.carvel.dev/local-fetch-0: .
+  creationTimestamp: null
+  name: argo-cd
+spec:
+  packageRef:
+    refName: argo-cd.packages.kadras.io
+    versionSelection:
+      constraints: 0.0.0
+  serviceAccountName: kadras-install-sa
+status:
+  conditions: null
+  friendlyDescription: ""
+  observedGeneration: 0
