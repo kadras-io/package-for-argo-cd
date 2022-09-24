@@ -166,7 +166,7 @@ jobs:
     permissions:
       contents: read
     env:
-      PACKAGE_REPO: carvel-packages
+      PACKAGE_REPO: kadras-packages
     steps:
       - name: Download package.yml artifact
         uses: actions/download-artifact@v3.0.0
@@ -183,7 +183,7 @@ jobs:
       - name: Checkout package repository source code
         uses: actions/checkout@v3.0.2
         with:
-          path: carvel-packages
+          path: kadras-packages
           repository: ${{ github.repository_owner }}/${{ env.PACKAGE_REPO }}
           ref: main
           token: ${{ secrets.GH_ORG_PAT }}
@@ -192,10 +192,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_ORG_PAT }}
         run: |
-          mv -f artifacts/${{ env.VERSION }}.yml carvel-packages/repo/packages/argo-cd.packages.kadras.io/${{ env.VERSION }}.yml
-          mv -f artifacts/metadata.yml carvel-packages/repo/packages/argo-cd.packages.kadras.io/metadata.yml
+          mv -f artifacts/${{ env.VERSION }}.yml kadras-packages/repo/packages/argo-cd.packages.kadras.io/${{ env.VERSION }}.yml
+          mv -f artifacts/metadata.yml kadras-packages/repo/packages/argo-cd.packages.kadras.io/metadata.yml
 
-          cd carvel-packages
+          cd kadras-packages
 
           git config user.name github-actions
           git config user.email github-actions@github.com
