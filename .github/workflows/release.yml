@@ -35,6 +35,8 @@ jobs:
       
       - name: Create k3d cluster
         run: |
+          # Initialize brew because of https://github.com/actions/runner-images/issues/6283
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           brew install k3d
           k3d cluster create test-cluster
 
@@ -218,4 +220,4 @@ jobs:
           git commit -m "Update Argo CD metadata and add version ${VERSION}"
           git push origin ${branch_name}
 
-          gh pr create -f --base main --title "Add Argo CD ${VERSION}"
+          gh pr create -f --base main --title "Add Argo CD ${VERSION}" --body "Update Argo CD metadata and add version ${VERSION}"
