@@ -39,7 +39,7 @@ Either way, you can then install the Argo CD package using [`kctrl`](https://car
 ```shell
 kctrl package install -i argo-cd \
     -p argo-cd.packages.kadras.io \
-    -v 2.4.12 \
+    -v 2.5.0 \
     -n carvel-packages
 ```
 
@@ -77,14 +77,14 @@ Then, reference it from the `kctrl` command when installing or upgrading the pac
 ```shell
 kctrl package install -i argo-cd \
     -p argo-cd.packages.kadras.io \
-    -v 2.4.12 \
+    -v 2.5.0 \
     -n carvel-packages \
     --values-file values.yml
 ```
 
 ## Documentation
 
-For documentation specific to Argo CD, check out [https://argoproj.github.io/cd](https://argoproj.github.io/cd).
+For documentation specific to Argo CD, check out [argoproj.github.io/cd](https://argoproj.github.io/cd).
 
 ## Supply Chain Security
 
