@@ -13,7 +13,7 @@ done
 echo -e "📦 Deploying Carvel package...\n"
 
 cd package
-kctrl dev -f package-resources.yml --local  -y
+kctrl dev -f package-resources.yml --local -y
 cd ..
 
 echo -e "🎮 Verifying package..."

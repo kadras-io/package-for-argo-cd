@@ -1,0 +1,20 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: kapp.k14s.io/v1alpha1
+kind: Config
+
+minimumRequiredVersion: 0.50.0
+
+rebaseRules:
+
+#! This Secret is created empty and populated by Argo CD with credentials, tokens and TLS certificates.
+#! We want kapp-controller to accept new changes to the 'data' path.
+- path: [data]
+  type: copy
+  sources: [new, existing]
+  resourceMatchers:
+  - kindNamespaceNameMatcher:
+      kind: Secret
+      namespace: #@ data.values.namespace
+      name: argocd-secret

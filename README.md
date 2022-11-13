@@ -39,7 +39,7 @@ Either way, you can then install the Argo CD package using [`kctrl`](https://car
 ```shell
 kctrl package install -i argo-cd \
     -p argo-cd.packages.kadras.io \
-    -v 2.5.1 \
+    -v 2.5.2 \
     -n carvel-packages
 ```
 
@@ -77,7 +77,7 @@ Then, reference it from the `kctrl` command when installing or upgrading the pac
 ```shell
 kctrl package install -i argo-cd \
     -p argo-cd.packages.kadras.io \
-    -v 2.5.1 \
+    -v 2.5.2 \
     -n carvel-packages \
     --values-file values.yml
 ```
