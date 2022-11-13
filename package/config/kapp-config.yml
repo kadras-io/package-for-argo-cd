@@ -6,10 +6,12 @@ kind: Config
 
 minimumRequiredVersion: 0.50.0
 
+#! Rebase rules explicitly define how kapp should merge resources during an update.
+#! See more about the resource merge method: https://carvel.dev/kapp/docs/latest/merge-method.
 rebaseRules:
 
 #! This Secret is created empty and populated by Argo CD with credentials, tokens and TLS certificates.
-#! We want kapp-controller to accept new changes to the 'data' path.
+#! We want to maintain those values but also accept new changes to the 'data' path.
 - path: [data]
   type: copy
   sources: [new, existing]
@@ -18,3 +20,34 @@ rebaseRules:
       kind: Secret
       namespace: #@ data.values.namespace
       name: argocd-secret
+
+#! By default, the changes applied by users to the ConfigMaps used by Argo CD
+#! are persisted between upgrades.
+- path: [data]
+  type: copy
+  sources: [existing, new]
+  resourceMatchers:
+  - andMatcher:
+      matchers:
+      - apiVersionKindMatcher: {apiVersion: v1, kind: ConfigMap}
+      - hasNamespaceMatcher:
+          names:
+          - #@ data.values.namespace
+
+#! When the SSH known hosts are updated, we want to use the new values
+#! and discard any change applied by users directly to the cluster.
+- path: [data, ssh_known_hosts]
+  type: remove
+  resourceMatchers:
+  - kindNamespaceNameMatcher:
+      kind: ConfigMap
+      namespace: #@ data.values.namespace
+      name: argocd-ssh-known-hosts-cm
+- path: [data, ssh_known_hosts]
+  type: copy
+  sources: [new]
+  resourceMatchers:
+  - kindNamespaceNameMatcher:
+      kind: ConfigMap
+      namespace: #@ data.values.namespace
+      name: argocd-ssh-known-hosts-cm
