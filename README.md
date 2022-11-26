@@ -37,13 +37,17 @@ Then, install the Argo CD package.
     -n kadras-packages
   ```
 
-You can verify the list of installed packages and their status.
+### Verification
+
+You can verify the list of installed Carvel packages and their status.
 
   ```shell
   kctrl package installed list -n kadras-packages
   ```
 
-You can also get the list of versions available in the Kadras package repository for Argo CD.
+### Version
+
+You can get the list of versions available in the Kadras package repository for Argo CD.
 
   ```shell
   kctrl package available list -p argo-cd.packages.kadras.io -n kadras-packages
