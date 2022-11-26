@@ -8,52 +8,46 @@ This project provides a [Carvel package](https://carvel.dev/kapp-controller/docs
 
 ## Prerequisites
 
-* Install the [`kctrl`](https://carvel.dev/kapp-controller/docs/latest/install/#installing-kapp-controller-cli-kctrl) CLI to manage Carvel packages in a convenient way.
-* Ensure [kapp-controller](https://carvel.dev/kapp-controller) is deployed in your Kubernetes cluster. You can do that with Carvel
-[`kapp`](https://carvel.dev/kapp/docs/latest/install) (recommended choice) or `kubectl`.
+* Kubernetes 1.24+
+* Carvel [`kctrl`](https://carvel.dev/kapp-controller/docs/latest/install/#installing-kapp-controller-cli-kctrl) CLI.
+* Carvel [kapp-controller](https://carvel.dev/kapp-controller) deployed in your Kubernetes cluster. You can install it with Carvel [`kapp`](https://carvel.dev/kapp/docs/latest/install) (recommended choice) or `kubectl`.
 
-```shell
-kapp deploy -a kapp-controller -y \
-  -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/latest/download/release.yml
-```
+  ```shell
+  kapp deploy -a kapp-controller -y \
+    -f https://github.com/vmware-tanzu/carvel-kapp-controller/releases/latest/download/release.yml
+  ```
 
 ## Installation
 
-You can install the Argo CD package directly or rely on the [Kadras package repository](https://github.com/arktonix/carvel-packages)
-(recommended choice).
+First, add the [Kadras package repository](https://github.com/arktonix/kadras-packages) to your Kubernetes cluster.
 
-Follow the [instructions](https://github.com/arktonix/carvel-packages) to add the Kadras package repository to your Kubernetes cluster.
+  ```shell
+  kubectl create namespace kadras-packages
+  kctrl package repository add -r kadras-repo \
+    --url ghcr.io/arktonix/kadras-packages \
+    -n kadras-packages
+  ```
 
-If you don't want to use the Kadras package repository, you can create the necessary `PackageMetadata` and
-`Package` resources for the Argo CD package directly.
+Then, install the Argo CD package.
 
-```shell
-kubectl create namespace carvel-packages
-kapp deploy -a argo-cd-package -n carvel-packages -y \
-    -f https://github.com/arktonix/package-for-argo-cd/releases/latest/download/metadata.yml \
-    -f https://github.com/arktonix/package-for-argo-cd/releases/latest/download/package.yml
-```
-
-Either way, you can then install the Argo CD package using [`kctrl`](https://carvel.dev/kapp-controller/docs/latest/install/#installing-kapp-controller-cli-kctrl).
-
-```shell
-kctrl package install -i argo-cd \
+  ```shell
+  kctrl package install -i argo-cd \
     -p argo-cd.packages.kadras.io \
     -v 2.5.2 \
-    -n carvel-packages
-```
+    -n kadras-packages
+  ```
 
-You can retrieve the list of available versions with the following command.
+You can verify the list of installed packages and their status.
 
-```shell
-kctrl package available list -p argo-cd.packages.kadras.io
-```
+  ```shell
+  kctrl package installed list -n kadras-packages
+  ```
 
-You can check the list of installed packages and their status as follows.
+You can also get the list of versions available in the Kadras package repository for Argo CD.
 
-```shell
-kctrl package installed list -n carvel-packages
-```
+  ```shell
+  kctrl package available list -p argo-cd.packages.kadras.io -n kadras-packages
+  ```
 
 ## Configuration
 
@@ -62,29 +56,59 @@ The Argo CD package has the following configurable properties.
 | Config | Default | Description |
 |-------|-------------------|-------------|
 | `namespace` | `argocd` | The namespace where to install Argo CD. |
-| `service.type` | `ClusterIP` | The type of Kubernetes service to provision for the Argo CD Server. Valid values are `LoadBalancer`, `NodePort`, and `ClusterIP`. |
+| `service.type` | `ClusterIP` | The type of Kubernetes Service to use for the Argo CD Server. Valid values are `LoadBalancer`, `NodePort`, and `ClusterIP`. |
 
 You can define your configuration in a `values.yml` file.
 
-```yaml
-namespace: argocd
-service:
-  type: ClusterIP
-```
+  ```yaml
+  namespace: argocd
+  service:
+    type: ClusterIP
+  ```
 
-Then, reference it from the `kctrl` command when installing or upgrading the package.
+Then, pass the file when installing the package.
 
-```shell
-kctrl package install -i argo-cd \
+  ```shell
+  kctrl package install -i argo-cd \
     -p argo-cd.packages.kadras.io \
     -v 2.5.2 \
-    -n carvel-packages \
+    -n kadras-packages \
     --values-file values.yml
-```
+  ```
 
-## Documentation
+## Upgrading
 
-For documentation specific to Argo CD, check out [argoproj.github.io/cd](https://argoproj.github.io/cd).
+You can upgrade an existing package to a newer version using `kctrl`.
+
+  ```shell
+  kctrl package installed update -i argo-cd \
+    -v <new-version> \
+    -n kadras-packages
+  ```
+
+You can also update an existing package with a newer `values.yml` file.
+
+  ```shell
+  kctrl package installed update -i argo-cd \
+    -n kadras-packages \
+    --values-file values.yml
+  ```
+
+## Other
+
+The recommended way of installing the Argo CD package is via the [Kadras package repository](https://github.com/arktonix/kadras-packages). If you prefer not using the repository, you can install the package by creating the necessary Carvel `PackageMetadata` and `Package` resources directly
+using [`kapp`](https://carvel.dev/kapp/docs/latest/install) or `kubectl`.
+
+  ```shell
+  kubectl create namespace kadras-packages
+  kapp deploy -a argo-cd-package -n kadras-packages -y \
+    -f https://github.com/arktonix/package-for-argo-cd/releases/latest/download/metadata.yml \
+    -f https://github.com/arktonix/package-for-argo-cd/releases/latest/download/package.yml
+  ```
+
+## Support and Documentation
+
+For support and documentation specific to Argo CD, check out [argoproj.github.io/cd](https://argoproj.github.io/cd).
 
 ## Supply Chain Security
 
