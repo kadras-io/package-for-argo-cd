@@ -2,10 +2,6 @@
 
 This project provides a [Carvel package](https://carvel.dev/kapp-controller/docs/latest/packaging) for [Argo CD](https://argoproj.github.io/cd), a declarative and GitOps continuous delivery tool for Kubernetes.
 
-## Components
-
-* Argo CD
-
 ## Prerequisites
 
 * Kubernetes 1.24+
