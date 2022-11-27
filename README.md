@@ -43,7 +43,7 @@ You can verify the list of installed Carvel packages and their status.
 
 ### Version
 
-You can get the list of versions available in the Kadras package repository for Argo CD.
+You can get the list of Argo CD versions available in the Kadras package repository.
 
   ```shell
   kctrl package available list -p argo-cd.packages.kadras.io -n kadras-packages
