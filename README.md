@@ -31,7 +31,7 @@ Then, install the Argo CD package.
   ```shell
   kctrl package install -i argo-cd \
     -p argo-cd.packages.kadras.io \
-    -v 2.5.4 \
+    -v 2.5.5 \
     -n kadras-packages
   ```
 
@@ -73,7 +73,7 @@ Then, pass the file when installing the package.
   ```shell
   kctrl package install -i argo-cd \
     -p argo-cd.packages.kadras.io \
-    -v 2.5.4 \
+    -v 2.5.5 \
     -n kadras-packages \
     --values-file values.yml
   ```
