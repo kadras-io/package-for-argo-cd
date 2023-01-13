@@ -53,7 +53,7 @@ spec:
   longDescription: Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes.
   maintainers:
   - name: Thomas Vitale
-  providerName: Arktonix
+  providerName: Kadras
   shortDescription: Argo CD is a declarative, GitOps continuous delivery tool for
     Kubernetes.
 
