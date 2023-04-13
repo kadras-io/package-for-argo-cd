@@ -21,7 +21,7 @@ rebaseRules:
       namespace: #@ data.values.namespace
       name: argocd-secret
 
-#! By default, the changes applied by users to the ConfigMaps used by Argo CD
+#! Changes applied by users to the ConfigMaps for which this package doesn't provide overlays
 #! are persisted between upgrades.
 - path: [data]
   type: copy
