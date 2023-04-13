@@ -95,8 +95,6 @@ The Argo CD package has the following configurable properties.
 
 <details><summary>Configurable properties</summary>
 
-The Argo CD package has the following configurable properties.
-
 | Config | Default | Description |
 |-------|-------------------|-------------|
 | `namespace` | `argocd` | The namespace where to install Argo CD. |
