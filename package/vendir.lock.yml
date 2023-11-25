@@ -2,8 +2,8 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Bump version to 2.9.0 (#16245)...
-      sha: 9cf0c69bbe70393db40e5755e34715f30179ee09
+      commitTitle: Bump version to 2.9.2 (#16405)...
+      sha: c5ea5c4df52943a6fff6c0be181fde5358970304
       tags:
       - stable
     path: .
