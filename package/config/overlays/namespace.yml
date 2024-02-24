@@ -13,7 +13,7 @@ metadata:
   #@overlay/match missing_ok=True
   namespace: #@ data.values.namespace
 
-#@overlay/match by=overlay.subset({"kind": "ClusterRoleBinding"}), expects=2
+#@overlay/match by=overlay.subset({"kind": "ClusterRoleBinding"}), expects=3
 ---
 subjects:
 #@overlay/match by=overlay.subset({"namespace": "argocd"})
