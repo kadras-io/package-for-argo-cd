@@ -6,6 +6,9 @@
 [![The Apache 2.0 license badge](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Follow us on Twitter](https://img.shields.io/static/v1?label=Twitter&message=Follow&color=1DA1F2)](https://twitter.com/kadrasIO)
 
+> **Warning**
+> This package has been archived. For GitOps features, you can choose between Carvel and [Flux](https://github.com/kadras-io/package-for-flux), supported out-of-the-box by Kadras, or bring your own Argo CD package.
+
 A Carvel package for [Argo CD](https://argoproj.github.io/cd), a declarative and GitOps continuous delivery tool for Kubernetes.
 
 ## 🚀&nbsp; Getting Started
